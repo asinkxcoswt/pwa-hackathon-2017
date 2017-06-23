@@ -1,0 +1,7 @@
+{
+  "name": "Secretary Owl",
+  "short_name": "Secretary Owl",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait"
+}
