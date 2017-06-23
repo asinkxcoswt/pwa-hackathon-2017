@@ -4,7 +4,7 @@
   "description": "A cute owl who helps managing your task list.",
   "main": "public/index.js",
   "scripts": {
-    "test": "test",
+    "test": "echo we do test on production 555",
     "webpack": "webpack --config webpack.config.js"
   },
   "repository": {

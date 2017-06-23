@@ -2,6 +2,7 @@
   "hosting": {
     "public": "./public",
     "ignore": [
+      "**/*.jsx"
     ],
     "headers": [{
       "source" : "**/*.@(js|html)",
