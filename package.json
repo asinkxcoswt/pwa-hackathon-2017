@@ -2,7 +2,7 @@
   "name": "secretary-owl",
   "version": "1.0.0",
   "description": "A cute owl who helps managing your task list.",
-  "main": "index.js",
+  "main": "public/index.js",
   "scripts": {
     "test": "test",
     "webpack": "webpack --config webpack.config.js"

@@ -5,9 +5,9 @@ const path = require("path");
 module.exports = {
     context: __dirname,
     devtool: debug ? "inline-sourcemap" : null,
-    entry: "./js/scripts.jsx",
+    entry: "./public/js/scripts.jsx",
     output: {
-        path: __dirname + "/js",
+        path: __dirname + "public/js",
         filename: "scripts.min.js"
     },
     plugins: debug ? [] : [
@@ -22,7 +22,7 @@ module.exports = {
 
                 // Skip any files outside of your project's `src` directory
                 include: [
-                    path.resolve(__dirname, "js"),
+                    path.resolve(__dirname, "public/js"),
                 ],
 
                 // Only run `.js` and `.jsx` files through Babel
