@@ -7,7 +7,7 @@ module.exports = {
     devtool: debug ? "inline-sourcemap" : null,
     entry: "./public/js/scripts.jsx",
     output: {
-        path: __dirname + "public/js",
+        path: __dirname + "/public/js",
         filename: "scripts.min.js"
     },
     plugins: debug ? [] : [
@@ -34,6 +34,10 @@ module.exports = {
                     presets: ['es2015', 'stage-0', 'react'],
                 }
             },
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
+            }
         ]
     }
 };
