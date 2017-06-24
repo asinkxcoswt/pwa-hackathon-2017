@@ -7,8 +7,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import owl from "./secretary-owl.jsx";
-const { SecretaryOwl, AVAILABLE_JOBS } = owl;
+import SecretaryOwl from "./secretary-owl.jsx";
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
@@ -25,17 +24,16 @@ class App extends React.Component {
             context: $update(this.state.context, { $merge: { lang: lang } })
           });
         }
-      }
+      },
+      availableJobList: []
     };
   }
 
-  closeLeftNav = () => {
-
+  componentDidMount() {
+    this.setState({ availableJobList: this.owl.getAvailableJobList() })
   }
 
   render() {
-    console.log("# ")
-    console.log(this.state.context)
     return (
       <MuiThemeProvider>
         <div>
@@ -54,14 +52,19 @@ class App extends React.Component {
                 anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
               >
                 {
-                  AVAILABLE_JOBS.map((job, idx) => {
-                    return <MenuItem key={idx} primaryText={this.state.context.lang === "EN" ? job.desc : job.descTH} />
+                  this.state.availableJobList.map((job, idx) => {
+                    return <MenuItem
+                      key={idx}
+                      primaryText={this.state.context.lang === "EN" ? job.desc : job.descTH}
+                      onTouchTap={job.action} />
                   })
                 }
               </IconMenu>
             }
           />
-          <SecretaryOwl context={this.state.context} />
+          <SecretaryOwl
+            ref={(component) => this.owl = component}
+            context={this.state.context} />
         </div>
       </MuiThemeProvider>
     );
