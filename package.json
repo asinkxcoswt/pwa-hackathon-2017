@@ -35,12 +35,15 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "babel-runtime": "^6.23.0",
+    "grommet": "^1.4.1",
+    "immutability-helper": "^2.2.2",
     "jquery": "^3.2.1",
     "material-ui": "^0.18.3",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-tap-event-plugin": "^2.0.1",
-    "react-toolbox": "^2.0.0-beta.12"
+    "react-toolbox": "^2.0.0-beta.12",
+    "string-similarity": "^1.2.0"
   }
 }

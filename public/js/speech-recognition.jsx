@@ -16,7 +16,8 @@ export class SpeechRecognition {
     onAudioStart: () => { },
     onAudioEnd: () => { },
     onNoMatch: () => { },
-    onError: () => { }
+    onError: () => { },
+    lang: "en-EN"
   }
 
   constructor(props) {
@@ -31,7 +32,7 @@ export class SpeechRecognition {
     this.recognition = new webkitSpeechRecognition();
     this.recognition.continuous = false; //Suitable for dictation. 
     this.recognition.interimResults = false;  //If we want to start receiving results even if they are not final.
-    this.recognition.lang = "en-US";
+    this.recognition.lang = this.props.lang;
     this.recognition.maxAlternatives = 1; //Since from our experience, the highest result is really the best...
 
     this.recognition.onstart = () => {

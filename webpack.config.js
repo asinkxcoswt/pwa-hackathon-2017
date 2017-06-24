@@ -5,10 +5,10 @@ const path = require("path");
 module.exports = {
     context: __dirname,
     devtool: debug ? "inline-sourcemap" : null,
-    entry: "./public/js/scripts.jsx",
+    entry: "./public/js/app.jsx",
     output: {
         path: __dirname + "/public/js",
-        filename: "scripts.min.js"
+        filename: "app.min.js"
     },
     plugins: debug ? [] : [
         new webpack.optimize.DedupePlugin(),

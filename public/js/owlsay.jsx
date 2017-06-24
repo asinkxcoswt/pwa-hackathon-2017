@@ -102,7 +102,8 @@ export class OwlSay extends React.Component {
     width: 500,
     height: 500,
     onUserGoingToSay: () => { },
-    onUserFinishedSaying: (userMessage) => { }
+    onUserFinishedSaying: (userMessage) => { },
+    context: {}
   }
 
   constructor(props) {
@@ -118,24 +119,30 @@ export class OwlSay extends React.Component {
 
     this.setState({ isListening: true }, () => {
 
-      let speechRecognition = new SpeechRecognition({
-        onStart: () => { },
-        onEnd: (message) => {
-          this.props.onUserFinishedSaying(message);
-          this.setState({ isListening: false });
-        },
-        onSpeechStart: () => { 
-          this.props.onUserIsSaying();
-        },
-        onSpeechEnd: () => { },
-        onAudioStart: () => {
-          this.props.onUserGoingToSay();
-        },
-        onAudioEnd: () => { },
-        onNoMatch: () => { },
-        onError: () => { }
-      });
-      speechRecognition.start();
+      try {
+        let speechRecognition = new SpeechRecognition({
+          lang: this.props.context.lang === "EN" ? "en-EN" : "th-TH",
+          onStart: () => { },
+          onEnd: (message) => {
+            this.props.onUserFinishedSaying(message);
+            this.setState({ isListening: false });
+          },
+          onSpeechStart: () => {
+            this.props.onUserIsSaying();
+          },
+          onSpeechEnd: () => { },
+          onAudioStart: () => {
+            this.props.onUserGoingToSay();
+          },
+          onAudioEnd: () => { },
+          onNoMatch: () => { },
+          onError: () => { }
+        });
+        speechRecognition.start();
+      } catch (err) {
+        alert("Sorry, speech recognition function only supported by Google Chrome currently.");
+      }
+
     });
 
   }
