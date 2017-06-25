@@ -1,9 +1,8 @@
 import OwlSay from "./owlsay.jsx";
 import React from "react";
 import StringSim from "string-similarity";
-
-
-
+import API from "./api.jsx";
+import QueryString from "query-string";
 
 export class SecretaryOwl extends React.Component {
 
@@ -32,6 +31,13 @@ export class SecretaryOwl extends React.Component {
             message: "The language has been changed to English",
             messageTH: "เปลี่ยนเป็นภาษาไทยแล้ว"
           });
+        }
+      },
+      {
+        desc: "Login to Asana",
+        descTH: "ลงชื่อเข้าใช้ Asana",
+        action: () => {
+          API.loginAsana();
         }
       },
       {
@@ -135,15 +141,58 @@ export class SecretaryOwl extends React.Component {
     };
   }
 
+  setUserAsanaAccessToken = (token) => {
+    this._userAsanaAccessToken = token;
+  }
+
+  getUserAsanaAccessToken = () => {
+    return this._userAsanaAccessToken;
+  }
+
+  ensureAsanaAccess = (callback) => {
+    let accessToken = this.getUserAsanaAccessToken();
+    if (!accessToken) {
+      this.setState({
+        owlAction: "ANGRY",
+        message: <p>I don't have access to your Asana account, please tell me to 'Login to Asana'</p>,
+        messageTH: <p>เรายังไม่มีสิทธิเข้าใช้งาน Asana ของเธอ ลองบอกให้เรา 'ลงชื่อเข้าใช้ Asana' ก่อนสิ</p>,
+      });
+      return;
+    }
+
+    API.testAsanaAccessToken(accessToken).done((response) => {
+      console.log(response);
+      callback.call(this);
+    }).fail((error) => {
+      console.log(error);
+      this.setState({
+        owlAction: "ANGRY",
+        message: <p>Your Asana access token is not valid anymore, maybe it has expired, please tell me to 'Login to Asana' again.</p>,
+        messageTH: <p>สิทธิ์การเข้าใช้งาน Asana ของเธอใช้ไม่ได้แล้ว มันคงจะหมดอายุ ลองบอกให้เรา 'ลงชื่อเข้าใช้ Asana' อีกทีนะ</p>,
+      });
+    });
+  }
+
   constructor(props) {
     super(props);
+    this.jobRefs = [];
     this.state = {
       owlAction: "SUGGEST",
       message: <p>Hi!, please <b>click or tab on me</b> when you want to tell me to do something. You can open the <b>top right menu</b> to see what I can do. If you don't tell me to do anything for a while, I will do <b>some notification jobs</b> for you because I am a sleepless owl!</p>,
-      messageTH: <p>สวัสดีจ้า!, เราคือนกฮูกเลขา เราจะช่วยเธอจัดการกับรายการงานอันเละเทะใน Asana ของเธอ <b>เมนูด้านบนขวามือ</b>มีรายการสิ่งที่เราทำได้ในตอนนี้ ซึ่งมีทั้งสิ่งที่เราจะทำเมื่อเธอสั่งและสิ่งที่เราจะทำเองและ<b>แจ้งเตือน</b>เธออยู่เรื่อยๆ ถ้าเธอต้องการบอกให้เราทำอะไรก็<b>กดที่ตัวเรา</b>และพูดผ่านไมค์ได้เลย</p>,
+      messageTH: <p>สวัสดีจ้า! เราคือนกฮูกเลขา เราจะช่วยเธอจัดการกับรายการงานอันเละเทะใน Asana ของเธอ <b>เมนูด้านบนขวามือ</b>มีรายการสิ่งที่เราทำได้ในตอนนี้ ซึ่งมีทั้งสิ่งที่เราจะทำเมื่อเธอสั่งและสิ่งที่เราจะทำเองและ<b>แจ้งเตือน</b>เธออยู่เรื่อยๆ ถ้าเธอต้องการบอกให้เราทำอะไรก็<b>กดที่ตัวเรา</b>และพูดผ่านไมค์ได้เลย</p>,
     };
-    this.jobRefs = [];
-    //this.props.onInitAvailableJobList(this.getAvailableJobList());
+
+    let requestHashParams = QueryString.parse(location.hash);
+    if (requestHashParams.access_token) {
+      this.setUserAsanaAccessToken(requestHashParams.access_token);
+      this.ensureAsanaAccess(() => {
+        this.setState({
+          owlAction: "CHEER",
+          message: <p>Welcome back! I have logged into your Asana account.</p>,
+          messageTH: <p>ยินดีด้วย! เราลงชื่อเข้าใช้ Asana ของเธอเรียบร้อยแล้ว</p>,
+        });
+      });
+    }
     this.addJob(this.doNextBackgroundTask, this.props.secondsToWaitForUserInput);
   }
 

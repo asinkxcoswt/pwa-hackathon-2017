@@ -1,0 +1,9 @@
+CACHE MANIFEST
+#ver:6/25/2017, 3:31:44 PM
+#plugin:4.8.1
+
+CACHE:
+/js/app.min.js
+
+NETWORK:
+*

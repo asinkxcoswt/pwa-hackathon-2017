@@ -1,6 +1,29 @@
 const debug = process.env.NODE_ENV !== "production";
 const webpack = require("webpack");
 const path = require("path");
+const OfflinePlugin = require('offline-plugin');
+
+const offline = new OfflinePlugin({
+    publicPath: '/js',
+    caches: {
+        main: [
+            'app.*.css',
+            'app.*.js',
+        ],
+        additional: [
+            ':externals:'
+        ],
+        optional: [
+            ':rest:'
+        ]
+    },
+    externals: [
+        '/'
+    ],
+    ServiceWorker: {
+        navigateFallbackURL: '/'
+    },
+});
 
 module.exports = {
     context: __dirname,
@@ -10,10 +33,13 @@ module.exports = {
         path: __dirname + "/public/js",
         filename: "app.min.js"
     },
-    plugins: debug ? [] : [
+    plugins: debug ? [
+        offline,
+    ] : [
         new webpack.optimize.DedupePlugin(),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
+        offline
     ],
     module: {
         loaders: [

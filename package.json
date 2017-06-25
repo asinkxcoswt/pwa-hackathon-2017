@@ -29,6 +29,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.4",
+    "offline-plugin": "^4.8.1",
     "style-loader": "^0.18.2",
     "webpack": "^3.0.0"
   },
@@ -40,6 +41,7 @@
     "jquery": "^3.2.1",
     "material-ui": "^0.18.3",
     "prop-types": "^15.5.10",
+    "query-string": "^4.3.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-tap-event-plugin": "^2.0.1",
