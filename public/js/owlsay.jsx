@@ -1,6 +1,7 @@
 import React from "react";
 import $ from "jquery";
 import { SpeechRecognition, NoAPIException } from "./speech-recognition.jsx"
+import CircularProgress from 'material-ui/CircularProgress';
 
 const OwlSourceForAction = {
   SUGGEST: "../img/owl/owl1.png",
@@ -17,7 +18,8 @@ const OwlSourceForAction = {
 class Owl extends React.Component {
 
   static defaultProps = {
-    action: "SUGGEST"
+    action: "SUGGEST",
+    loading: false
   }
 
   render() {
@@ -29,6 +31,16 @@ class Owl extends React.Component {
             maxWidth: "100%",
             maxHeight: "100%"
           }} />
+        <div style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          zIndex: 101,
+          marginTop: -40,
+          marginLeft: -40,
+        }}>
+          {this.props.loading ? <CircularProgress size={80} thickness={5} /> : ""}
+        </div>
       </div>
     );
   }
@@ -99,6 +111,7 @@ export class OwlSay extends React.Component {
   static defaultProps = {
     owlAction: "SUGGEST", // "SUGGEST", "SMILE", "PLAYFUL", "KNOW_WHAT_YOU_MEAN", "SLEEP", "SLEEPY", "ANGRY", "WONDER", "CHEER"
     message: "",
+    loading: false,
     width: 500,
     height: 500,
     onUserGoingToSay: () => { },
@@ -168,7 +181,7 @@ export class OwlSay extends React.Component {
           <div
             style={{ cursor: "pointer" }}
             onClick={this.userGoingToSay} >
-            <Owl action={this.props.owlAction} />
+            <Owl action={this.props.owlAction} loading={this.props.loading} />
           </div>
         </div>
         <a href="http://www.freepik.com" style={{ textDecoration: "None", color: "#444444" }}>Image Credit : Designed by Freepik</a>

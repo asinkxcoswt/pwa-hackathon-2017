@@ -1,7 +1,7 @@
 var __wpo = {
   "assets": {
     "main": [
-      "/js/app.min.js"
+      "/app.min.js"
     ],
     "additional": [
       "/",
@@ -14,13 +14,13 @@ var __wpo = {
     "/"
   ],
   "hashesMap": {
-    "4e8ac0d05aee2f7a71fac53ef3aaa5803362dff9": "/js/app.min.js"
+    "7e59c117d195e3038c2322085fa59a0cddf3c386": "/app.min.js"
   },
   "navigateFallbackURL": "/",
   "navigateFallbackForRedirects": true,
   "strategy": "changed",
   "responseStrategy": "cache-first",
-  "version": "6/25/2017, 7:28:14 PM",
+  "version": "6/25/2017, 6:10:54 PM",
   "name": "webpack-offline",
   "pluginVersion": "4.8.1",
   "relativePaths": false

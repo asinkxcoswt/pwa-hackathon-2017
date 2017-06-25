@@ -7,8 +7,8 @@ const offline = new OfflinePlugin({
     publicPath: '/js',
     caches: {
         main: [
-            'app.*.css',
-            'app.*.js',
+            '*.css',
+            '*.js',
         ],
         additional: [
             ':externals:'
@@ -18,9 +18,11 @@ const offline = new OfflinePlugin({
         ]
     },
     externals: [
-        '/'
+        '/',
+        '/index.html'
     ],
     ServiceWorker: {
+        output: './sw.js',
         navigateFallbackURL: '/'
     },
 });
@@ -36,11 +38,11 @@ module.exports = {
     plugins: debug ? [
         offline,
     ] : [
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-        offline
-    ],
+            new webpack.optimize.DedupePlugin(),
+            new webpack.optimize.OccurenceOrderPlugin(),
+            new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
+            offline
+        ],
     module: {
         loaders: [
             {
