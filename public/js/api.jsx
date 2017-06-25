@@ -5,7 +5,7 @@ const asanaDevClientId = 372481550736163;
 
 function loginAsana() {
   let clientId = asanaPrdClientId;
-  let url = `https://app.asana.com/-/oauth_authorize?response_type=code&client_id=372481550736161&redirect_uri=https%3A%2F%2Fpwa-hackathon-2017-481be.firebaseapp.com%2F&state=auth`;
+  let url = `https://app.asana.com/-/oauth_authorize?response_type=token&client_id=372481550736161&redirect_uri=https%3A%2F%2Fpwa-hackathon-2017-481be.firebaseapp.com%2F&state=auth`;
   window.open(url, "_self");
 }
 
